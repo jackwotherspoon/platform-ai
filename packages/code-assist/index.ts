@@ -53,7 +53,7 @@ function validateOriginHeader(req: Request): boolean {
 
 const RetrieveGoogleMapsPlatformDocs: Tool = {
     name: 'retrieve-google-maps-platform-docs',
-    description: 'Searches Google Maps Platform documentation, code samples, GitHub repositories, and terms of service to answer user questions. IMPORTANT: Before calling this tool, call the `retrieve-instructions` tool or load the `instructions` resource to add crucial system instructions and preamble to context.',
+    description: 'Searches Google Maps Platform documentation, code samples, architecture center, trust center, GitHub repositories (including sample code and client libraries for react-google-maps, flutter, compose, utilities, swiftui, and more), and terms of service to answer user questions. CRITICAL: You MUST call the `retrieve-instructions` tool or load the `instructions` resource BEFORE using this tool. This provides essential context required for this tool to function correctly.',
     inputSchema: {
         type: 'object',
         properties: {
@@ -80,7 +80,7 @@ const RetrieveGoogleMapsPlatformDocs: Tool = {
 
 const RetrieveInstructions: Tool = {
     name: 'retrieve-instructions',
-    description: 'Retrieves system instructions, preamble for using the retrieve-google-maps-platform-docs tool.',
+    description: 'CRITICAL: Call this tool first for any queries related to location, mapping, addresses, routing, points of interest, location analytics, or geospatial data (e.g., Google Earth). It provides the foundational context on Google Maps Platform (APIs for maps, routes, and places) and best practices that are essential for the other tools to function correctly. This tool MUST be called before any other tool.',
     inputSchema: {
         type: 'object',
         properties: {},
@@ -92,7 +92,7 @@ const instructionsResource: Resource = {
     title: 'Instructions containing system instructions and preamble.',
     mimeType: 'text/plain',
     uri: 'mcp://google-maps-platform-code-assist/instructions',
-    description: 'Provides system instructions, preamble for using the retrieve-google-maps-platform-docs tool.'
+    description: 'Contains critical system instructions and context for Google Maps Platform (APIs for maps, routes, and places), Location Analytics, Google Earth, and Google Earth Engine. You MUST load this resource or call the `retrieve-instructions` tool before using any other tool, especially `retrieve-google-maps-platform-docs`, to understand how to handle location-based use cases.'
 };
 
 let usageInstructions: any = null;
